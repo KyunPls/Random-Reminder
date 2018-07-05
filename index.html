@@ -55,13 +55,7 @@ function count(){
             // If the count down is over, write some text 
             if (distance < 0) {
                 clearInterval(x);
-                document.getElementById("demo").innerHTML = "終わり";
                 myAlert();
-                if(document.getElementById("auto").checked){
-
-                }else{
-                    running = false;
-                }
             }
         }, 1000);
     }
@@ -69,6 +63,12 @@ function count(){
 
 function myAlert() {
     getVideo();
+    if(document.getElementById("auto").checked){
+        count();
+    }else{
+        document.getElementById("demo").innerHTML = "終わり";
+        running = false;
+    }
     //alert("Hello! I am an alert box!");
 }
 
