@@ -14,8 +14,8 @@ p {
 <div>
     Min Max: <input type="text" id="minmax" value="10"><br>
     Min Min: <input type="text" id="minmin" value="1"><br>
-    <button value="Submit" onClick="count()">Go</button>
-    <button value="Stop" onClick="new function(){clearInterval(x);running = false;}">Stop</button>
+    <button value="Submit" onclick="count()">Go</button>
+    <button value="Stop" onclick="new function(){clearInterval(x);running = false;};return false;">Stop</button>
     Auto: <input type="checkbox" id="auto"  onclick="">
 </div>
 
@@ -24,7 +24,7 @@ p {
 
 <input type="text" id="videoId" value="">
 <button onclick="getVideo();return false;">Click me</button><br>
-<div id="video"></div>
+<div id="video"><div id='player'></div></div>
 
 <script>
 var running = false;
@@ -54,6 +54,7 @@ function count(){
         
             // If the count down is over, write some text 
             if (distance < 0) {
+                running = false;
                 clearInterval(x);
                 myAlert();
             }
@@ -62,12 +63,13 @@ function count(){
 }
 
 function myAlert() {
-    getVideo();
+    
     if(document.getElementById("auto").checked){
         count();
+        getVideo();
     }else{
         document.getElementById("demo").innerHTML = "終わり";
-        running = false;
+        getVideo();
     }
     //alert("Hello! I am an alert box!");
 }
