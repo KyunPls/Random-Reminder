@@ -3,141 +3,117 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1" charset="utf-8"/>
 <style>
-p {
-  text-align: center;
-  font-size: 60px;
-  margin-top:0px;
+.alpha {
+	padding-top: 60px;
+  	text-align: center;
+  	font-size: 60px;
+  	margin-top:0px;
+}
+body {font-family: Arial;}
+
+.title {
+    overflow: hidden;
+    border: 2px solid #ddd;
+    background-color: #050505;
+    height: 20px;
+    width: 40px;
+    outline: none;
+    clear: left;
+    padding: 4px 8px;
+    font-size: 15px;
+    color: #eee;
+    position: relative;
+    right: 200px;
+    top: 1px;
+    font-weight: 700;
+}
+
+.tab {
+    overflow: hidden;
+    border: 1px solid #666;
+    background-color: #050505;
+    width: 500px;
+}
+
+.tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+    font-size: 17px;
+    color: #eee;
+}
+
+.tab button:hover {
+    background-color: #22cc22;
+    color: #e1e1e1;
+    padding: 16px 17px;
+    font-weight: 700;
+}
+
+.tab button.active {
+    background-color: #33bb33;
+    color: #eee;
+    padding: 16px 17px;
+    font-weight: 550;
+}
+
+.tabcontent {
+	overflow: visible;
+    display: none;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    background-color: #050505;
+    border-top: none;
+    color: #eee;
+    width: 478px;
 }
 </style>
 </head>
 <body>
+<center>
 <div>
-    Min Max: <input type="text" id="minmax" value="10"><br>
-    Min Min: <input type="text" id="minmin" value="1"><br>
-    <button value="Submit" onclick="count()">Go</button>
-    <button value="Stop" onclick="new function(){clearInterval(x);running = false;};return false;">Stop</button>
-    Auto: <input type="checkbox" id="auto"  onclick="">
+<p class="alpha">パチモン</p>
+</div>
+<div class="title">Tools</div>
+<div class="tab">
+  <button class="tablinks" onclick="openCity(event, 'Write Sentence')">Stroke Order</button>
+  <button class="tablinks" onclick="openCity(event, 'Random Timer')">Random Timer</button>
+  <button class="tablinks" onclick="openCity(event, 'Extra')">Extra</button>
 </div>
 
-<p id="demo"></p>
-<!-- <p id="test"></p> -->
+<div id="Random Timer" class="tabcontent">
+  <a href="tools/RandomReminder.html"><h3>Random Timer</h3></a>
+  <p>Random Timer is an alarm that randomly goes off. This was made to help stay focused.</p>
+</div>
 
-<input type="text" id="videoId" value="">
-<button onclick="getVideo();return false;">Click me</button>
-<button onclick="player.playVideo();return false;">Play</button><br>
-<div id="video"><div id='player'></div></div>
+<div id="Write Sentence" class="tabcontent">
+  <a href="tools/KanjiStroke.html"><h3>Sentence Stroke Order</h3></a>
+  <p>Enter in a sentence and get the stroke order for each Kanji/Kana in the entire sentence</p> 
+</div>
 
+<div id="Extra" class="tabcontent">
+  <h3></h3>
+  <p></p>
+</div>
+</center>
 <script>
-var running = false;
-var x;
-
-function count(){
-    if(!running){
-    running = true;
-    var max = Number(document.getElementById("minmax").value);
-    var min = Number(document.getElementById("minmin").value);
-
-    var distance = (Math.floor(Math.random() * (max-min)) + min) * 1000 * 60;
-
-        x = setInterval(function() {
-
-            // Find the distance between now an the count down date
-            distance += -1000;
-            //document.getElementById("test").innerHTML = distance;
-
-            // Time calculations for days, hours, minutes and seconds
-            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-        
-            // Output the result in an element with id="demo"
-            document.getElementById("demo").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
-        
-            // If the count down is over, write some text 
-            if (distance < 0) {
-                running = false;
-                clearInterval(x);
-                myAlert();
-            }
-        }, 1000);
+function openCity(evt, tabName) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
     }
-}
-
-function myAlert() {
-    
-    if(document.getElementById("auto").checked){
-        count();
-        getVideo();
-    }else{
-        document.getElementById("demo").innerHTML = "終わり";
-        getVideo();
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
     }
-    //alert("Hello! I am an alert box!");
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.className += " active";
 }
-
-
-//Youtube video
-var playing = false;
-function getVideo() {
-    if(playing){
-        stopVideo();
-        player.loadVideoById({'videoId': document.getElementById("videoId").value,
-               'startSeconds': 1,
-               //'endSeconds': 60,
-               'suggestedQuality': 'highres'});
-    }else{
-
-        document.getElementById("video").innerHTML = "<div id='player'></div>";
-
-        // 2. This code loads the IFrame Player API code asynchronously.
-        var tag = document.createElement('script');
-        
-        tag.src = "https://www.youtube.com/iframe_api";
-        var firstScriptTag = document.getElementsByTagName('script')[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-    }
-}
-
-    // 3. This function creates an <iframe> (and YouTube player)
-    //    after the API code downloads.
-var player;
-
-function onYouTubeIframeAPIReady() {
-    player = new YT.Player('player', {
-        height: '390',
-        width: '640',
-        videoId: document.getElementById("videoId").value,
-        events: {
-            'onReady': onPlayerReady,
-            'onStateChange': onPlayerStateChange
-        }
-    });
-}
-
-            // 4. The API will call this function when the video player is ready.
-function onPlayerReady(event) {
-    event.target.playVideo();
-    playing = true;
-}
-
-            // 5. The API calls this function when the player's state changes.
-            //    The function indicates that when playing a video (state=1),
-            //    the player should play for six seconds and then stop.
-var done = false;
-
-function onPlayerStateChange(event) {
-    if (event.data == YT.PlayerState.PLAYING && !done) {
-        //setTimeout(stopVideo, 6000);
-        done = true;
-    }
-}
-
-function stopVideo() {
-    player.stopVideo();
-}   
-
 </script>
-
 </body>
 </html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <title>Random Image</title>
+    <script type="text/javascript">
+      var total, images;
+
+      function getImages(term){
+        document.getElementById("loader").innerHTML = "<iframe name='ifr' id='getter'></iframe>";
+        window.frames[0].location = "https://www.bing.com/images/search?q=" + term;
+        //document.getElementById("getter").src = "https://www.w3schools.com";
+      }
+
+      function test(){
+        //var frames = getElementById("getter");
+        var ifr = document.getElementById("getter");
+        document.getElementById("tester").innerHTML = "loading1";
+        images = ifr.document.getElementByTagName("img")[0].src;
+        document.getElementById("tester").innerHTML = "loading2";
+        document.getElementById("tester").innerHTML = images;
+        //for (total = 0; total < images.length; i++) {
+          //images[total].style.display = "none";
+        //}
+        //images.styles.width = '100%';
+        //images.styles.height = '90%';
+        //document.getElementById("screen1").src = "https://www.bing.com/th?id=OIP.NhJdBlIKL2rNrjnRIh5cqAHaHa&w=198&h=189&c=7&o=5&pid=1.7";
+        //document.getElementById("screen1").src = images;
+      }
+
+      
+    </script>
+  </head>
+  <body style="font-family: Arial;border: 0 none;">
+    <div>
+      <input type="text" name="term" id="term" value="test"><br>
+      <button id="go" onclick="getImages(term.value)">Go</button>
+      <button id="try" onclick="test()">Try</button>
+    </div>
+    <div id="loader"></div>
+    <p></p>
+    <div class="viewer">
+      <button><</button>
+      <img id="screen1" src="">
+      <button>></button>
+    </div>
+    <p id="tester"></p>
+  </body>
+</html>
